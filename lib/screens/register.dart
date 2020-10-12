@@ -10,6 +10,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State with LoginValidationMixin {
+  int _value = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +26,10 @@ class _RegisterState extends State with LoginValidationMixin {
             child: Column(
               children: <Widget>[
                 buildUserNameRegister(),
+                buildUserMail(),
                 buildUserPasswordRegister(),
-                buildSubmitButton(),
+                buildUserType(),
+                buildRegisterButton(),
               ],
             ),
           ),
@@ -38,8 +41,8 @@ class _RegisterState extends State with LoginValidationMixin {
   buildUserNameRegister() {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: "Kullanıcı Adı : ",
-        hintText: "kullanıcı adı",
+        labelText: "User Name : ",
+        hintText: "user name",
       ),
       validator: validateUserName,
     );
@@ -49,15 +52,15 @@ class _RegisterState extends State with LoginValidationMixin {
     return TextFormField(
       obscureText: true,
       decoration: InputDecoration(
-        labelText: "Şifre : ",
-        hintText: "Şifre : ",
+        labelText: "Password : ",
+        hintText: "password",
       ),
     );
   }
 
-  buildSubmitButton() {
+  buildRegisterButton() {
     return RaisedButton(
-      child: Text("Kayıt Ol"),
+      child: Text("Register"),
       onPressed: () {},
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18.0),
@@ -66,5 +69,38 @@ class _RegisterState extends State with LoginValidationMixin {
       color: Theme.of(context).primaryColor,
       textColor: Colors.white,
     );
+  }
+
+  buildUserMail() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: "E-Mail : ",
+        hintText: "e-Mail account",
+      ),
+    );
+  }
+
+  buildUserType() {
+    return DropdownButton(
+      value: _value,
+      items: [
+        DropdownMenuItem(
+          child: Text("Student"),
+          value: 1,
+        ),
+        DropdownMenuItem(
+          child: Text("Teacher"),
+          value: 2,
+        ),
+      ],
+      onChanged: (value) {
+        setState(() {
+          _value = value;
+          print(_value);
+        });
+      },
+    );
+
+    
   }
 }
